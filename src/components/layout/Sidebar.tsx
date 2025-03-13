@@ -1,19 +1,19 @@
-"use client"
-import React from "react"
-import { Separator } from "../ui/separator"
+"use client";
+import React from "react";
+import { Separator } from "../ui/separator";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion"
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
-import { Landmark, Settings } from "lucide-react"
-import Link from "next/link"
-import { DashboardIcon, PersonIcon, StudentIcon } from "@/utils/icon"
-import { usePathname } from "next/navigation"
+} from "@/components/ui/accordion";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Landmark, Settings } from "lucide-react";
+import Link from "next/link";
+import { DashboardIcon, PersonIcon, StudentIcon } from "@/types/utils/icon";
+import { usePathname } from "next/navigation";
 const Sidebar = () => {
-  const pathname = usePathname()
+  const pathname = usePathname();
   return (
     <div className="py-8 bg-white flex flex-col max-h-[120vh]  gap-6 w-[300px]">
       <div>
@@ -173,7 +173,7 @@ const Sidebar = () => {
         </Link>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Sidebar
+export default Sidebar;

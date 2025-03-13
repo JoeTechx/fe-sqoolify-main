@@ -10,7 +10,12 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Landmark, Settings } from "lucide-react";
 import Link from "next/link";
-import { DashboardIcon, NoticeboardIcon, StudentIcon, ClassIcon } from "@/utils/icon";
+import {
+  DashboardIcon,
+  NoticeboardIcon,
+  StudentIcon,
+  ClassIcon,
+} from "@/types/utils/icon";
 import { usePathname } from "next/navigation";
 
 const Sidebar = () => {
@@ -33,7 +38,6 @@ const Sidebar = () => {
           <div className="flex-1">
             <h3>Purs School</h3>
             <p className="text-muted-foreground mb-4 border-b-0">John Doe</p>
-            
           </div>
         </div>
         <Separator />
@@ -53,12 +57,17 @@ const Sidebar = () => {
               Dashboard
             </p>
           </Link>
-          <Accordion type="multiple" className="w-[100%] -my-6 hover:outline-none">
+          <Accordion
+            type="multiple"
+            className="w-[100%] -my-6 hover:outline-none"
+          >
             <AccordionItem value="item-1" className="border-b-0">
               <AccordionTrigger>
                 <div className="flex items-center gap-3 pl-4">
                   <ClassIcon
-                    color={`${pathname === "/staff/class*" ? "#E5B80B" : "#515B6F"}`}
+                    color={`${
+                      pathname === "/staff/class*" ? "#E5B80B" : "#515B6F"
+                    }`}
                   />
                   <p
                     className={`text-[#515B6F] ${
@@ -74,7 +83,9 @@ const Sidebar = () => {
                   <Link
                     href="/staff/class/timetable"
                     className={`hover:text-primaryColor text-[#515B6F] cursor-pointer ${
-                      pathname === "/staff/class/timetable" ? "text-primaryColor" : ""
+                      pathname === "/staff/class/timetable"
+                        ? "text-primaryColor"
+                        : ""
                     }`}
                   >
                     Time Table
@@ -82,7 +93,9 @@ const Sidebar = () => {
                   <Link
                     href="/staff/class/results"
                     className={`hover:text-primaryColor text-[#515B6F] cursor-pointer ${
-                      pathname === "/staff/class/results" ? "text-primaryColor" : ""
+                      pathname === "/staff/class/results"
+                        ? "text-primaryColor"
+                        : ""
                     }`}
                   >
                     Results
@@ -90,7 +103,9 @@ const Sidebar = () => {
                   <Link
                     href="/staff/class/library"
                     className={`hover:text-primaryColor text-[#515B6F] cursor-pointer ${
-                      pathname === "/staff/class/library" ? "text-primaryColor" : ""
+                      pathname === "/staff/class/library"
+                        ? "text-primaryColor"
+                        : ""
                     }`}
                   >
                     Library
@@ -98,7 +113,9 @@ const Sidebar = () => {
                   <Link
                     href="/staff/class/attendance"
                     className={`hover:text-primaryColor text-[#515B6F] cursor-pointer ${
-                      pathname === "/staff/class/attendance" ? "text-primaryColor" : ""
+                      pathname === "/staff/class/attendance"
+                        ? "text-primaryColor"
+                        : ""
                     }`}
                   >
                     Attendance
@@ -107,7 +124,10 @@ const Sidebar = () => {
               </AccordionContent>
             </AccordionItem>
           </Accordion>
-          <Link href="/staff/student" className={`flex items-center gap-3 pl-4`}>
+          <Link
+            href="/staff/student"
+            className={`flex items-center gap-3 pl-4`}
+          >
             <StudentIcon
               color={`${pathname === "/staff/student" ? "#E5B80B" : "#515B6F"}`}
             />
@@ -119,9 +139,14 @@ const Sidebar = () => {
               Student
             </p>
           </Link>
-          <Link href="/staff/noticeboard" className={`flex items-center gap-3 pl-4`}>
+          <Link
+            href="/staff/noticeboard"
+            className={`flex items-center gap-3 pl-4`}
+          >
             <NoticeboardIcon
-              color={`${pathname === "/staff/noticeboard" ? "#E5B80B" : "#515B6F"}`}
+              color={`${
+                pathname === "/staff/noticeboard" ? "#E5B80B" : "#515B6F"
+              }`}
             />
             <p
               className={`text-[#515B6F] ${
@@ -132,7 +157,6 @@ const Sidebar = () => {
             </p>
           </Link>
 
-        
           <Link
             href="/staff/settings"
             className={`flex items-center gap-3 pl-4 ${pathname === ""}`}
@@ -151,7 +175,6 @@ const Sidebar = () => {
             </p>
           </Link>
         </div>
-
       </div>
     </div>
   );

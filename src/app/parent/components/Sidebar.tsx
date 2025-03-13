@@ -15,7 +15,7 @@ import {
   NoticeboardIcon,
   StudentIcon,
   ClassIcon,
-} from "@/utils/icon";
+} from "@/types/utils/icon";
 import { usePathname } from "next/navigation";
 
 const Sidebar = () => {
@@ -74,12 +74,14 @@ const Sidebar = () => {
                 <div className="flex items-center gap-3 pl-4">
                   <ClassIcon
                     color={`${
-                       pathname.startsWith("/parent/kid") ? "#E5B80B" : "#515B6F"
+                      pathname.startsWith("/parent/kid") ? "#E5B80B" : "#515B6F"
                     }`}
                   />
                   <p
                     className={`text-[#515B6F] ${
-                       pathname.startsWith("/parent/kid") ? "text-primaryColor" : ""
+                      pathname.startsWith("/parent/kid")
+                        ? "text-primaryColor"
+                        : ""
                     }`}
                   >
                     My Kids
@@ -91,7 +93,9 @@ const Sidebar = () => {
                   <Link
                     href="/parent/kid/schedule"
                     className={`hover:text-primaryColor text-[#515B6F] cursor-pointer ${
-                      pathname === "/parent/kid/schedule" ? "text-primaryColor" : ""
+                      pathname === "/parent/kid/schedule"
+                        ? "text-primaryColor"
+                        : ""
                     }`}
                   >
                     Schedule
@@ -99,7 +103,9 @@ const Sidebar = () => {
                   <Link
                     href="/parent/kid/results"
                     className={`hover:text-primaryColor text-[#515B6F] cursor-pointer ${
-                      pathname === "/parent/kid/results" ? "text-primaryColor" : ""
+                      pathname === "/parent/kid/results"
+                        ? "text-primaryColor"
+                        : ""
                     }`}
                   >
                     Results
@@ -119,9 +125,7 @@ const Sidebar = () => {
             />
             <p
               className={`text-[#515B6F] ${
-                pathname === "/parent/payment"
-                  ? "text-primaryColor"
-                  : ""
+                pathname === "/parent/payment" ? "text-primaryColor" : ""
               }`}
             >
               Payment

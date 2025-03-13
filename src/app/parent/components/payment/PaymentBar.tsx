@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import React from "react";
 import {
@@ -8,14 +8,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { GreaterThan } from "@/utils/icon";
+import { GreaterThan } from "@/types/utils/icon";
 
 const PaymentBar = () => {
   return (
     <>
       <div className="flex items-center justify-between my-4  ">
         <div
-        //   href="/staff"
+          //   href="/staff"
           className="space-y-2 cursor-pointer hover:bg-slate-100 rounded-md"
         >
           <h2 className="text-[18px] sm:text-2xl font-semibold">Paymnents</h2>

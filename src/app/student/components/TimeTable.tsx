@@ -8,14 +8,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import Link from "next/link";
-import { GreaterThan } from "@/utils/icon";
+import { GreaterThan } from "@/types/utils/icon";
 
 const TimeTableBar = () => {
   return (
     <>
       <div className="flex items-center justify-between my-4  ">
         <div
-        //   href="/staff"
+          //   href="/staff"
           className="space-y-2 cursor-pointer hover:bg-slate-100 rounded-md"
         >
           <h2 className="text-[18px] sm:text-2xl font-semibold">Time Table</h2>

@@ -1,4 +1,4 @@
-import { ThreeDotsIcon } from "@/utils/icon";
+import { ThreeDotsIcon } from "@/types/utils/icon";
 import React from "react";
 
 const eventsData = [
@@ -8,8 +8,8 @@ const eventsData = [
     author: "Mildred Effiong",
     timeAgo: "5 min ago",
     viewText: "View",
-    bgColor: "bg-black", 
-    textColor: "text-white", 
+    bgColor: "bg-black",
+    textColor: "text-white",
   },
   {
     date: "13 July, 2021",
@@ -26,8 +26,8 @@ const eventsData = [
     author: "Mildred Effiong",
     timeAgo: "5 min ago",
     viewText: "View",
-    bgColor: "bg-black", 
-    textColor: "text-white", 
+    bgColor: "bg-black",
+    textColor: "text-white",
   },
 ];
 
@@ -41,28 +41,29 @@ const Noticeboard = () => {
 
       <div className="space-y-3 pr-4 overflow-auto h-[400px] custom-scrollbar">
         {eventsData.map((event, index) => (
-
-          <div key={index} className="py-4 flex border-b-[3px] border-gray justify-between gap-1 items-center">
+          <div
+            key={index}
+            className="py-4 flex border-b-[3px] border-gray justify-between gap-1 items-center"
+          >
             <div className="">
-                <div
+              <div
                 className={`inline-block px-3 py-1 text-[14px] ${event.bgColor} ${event.textColor} rounded-[20px]`}
-                >
+              >
                 {event.date}
-                </div>
-                <h3 className="mt-2 font-semibold text-[16px]">{event.title}</h3>
-                <div className="flex justify-between items-center mt-2">
+              </div>
+              <h3 className="mt-2 font-semibold text-[16px]">{event.title}</h3>
+              <div className="flex justify-between items-center mt-2">
                 <span className="text-sm text-gray-500">
-                    {event.author} / {event.timeAgo}
+                  {event.author} / {event.timeAgo}
                 </span>
-                </div>
-
+              </div>
             </div>
-                <a
-                    href="#"
-                    className="text-primaryColor text-sm font-semibold underline"
-                >
-                    {event.viewText}
-                </a>
+            <a
+              href="#"
+              className="text-primaryColor text-sm font-semibold underline"
+            >
+              {event.viewText}
+            </a>
           </div>
         ))}
       </div>
