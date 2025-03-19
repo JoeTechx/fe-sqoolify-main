@@ -1,22 +1,60 @@
-"use client"
-import React, { useState } from "react"
-import MaxWidthWrapper from "./MaxWidthWrapper"
-import Link from "next/link"
-import Image from "next/image"
-import { Button } from "./ui/button"
-import { Dialog, DialogTrigger } from "./ui/dialog"
-import Requirement from "./Requirement"
-import { useRouter } from "next/navigation"
+"use client";
+import React, { useState } from "react";
+import MaxWidthWrapper from "./MaxWidthWrapper";
+import Link from "next/link";
+import Image from "next/image";
+import { Button } from "./ui/button";
+import { Dialog, DialogTrigger } from "./ui/dialog";
+import Requirement from "./Requirement";
+import { useRouter } from "next/navigation";
+import { useUserStore } from "@/zustand/userStore";
+import { registerUser, sendOTP } from "./Api";
 
 const VerifiedEmail = () => {
-  const navigation = useRouter()
-  const [resend, setResend] = useState(false)
+  const navigation = useRouter();
+  const user = useUserStore((state) => state.user);
+  const clearUser = useUserStore((state) => state.clearUser);
+  const [resend, setResend] = useState(false);
   const resendHandler = () => {
     setTimeout(() => {
-      setResend(true)
-    }, 300)
-    navigation.push("/onboarding")
-  }
+      setResend(true);
+    }, 300);
+    navigation.push("/onboarding");
+  };
+
+  const handleVerifyOTP = async (otp: string) => {
+    console.log("Verifying OTP:", otp); // Log the OTP being verified
+
+    // Call your API to verify OTP
+    const isVerified = await sendOTP(otp); // Implement this function
+    
+    console.log("OTP verification result:", isVerified); // Log the result of OTP verification
+
+    // if (isVerified) {
+    //   // Get the user from the Zustand store
+    //   const user = useUserStore.getState().user; // Access the user from the store
+    //   console.log("User  data retrieved from store:", user); // Log the user data
+
+    //   if (user) {
+    //     // Check if user is not null
+    //     // Send POST request to register the user
+    //     const registrationResult = await registerUser(user); // Now user is guaranteed to be of type User
+    //     console.log("User  registration result:", registrationResult); // Log the result of registration
+
+    //     clearUser(); // Clear user data from store
+    //     navigation.push("/onboarding"); // Redirect to onboarding page
+    //   } else {
+    //     // Handle the case where user is null
+    //     console.error("User  data is not available. Please try again."); // Log an error
+    //     alert("User  data is not available. Please try again.");
+    //   }
+    // } else {
+    //   // Handle OTP verification failure
+    //   console.error("OTP verification failed. Please try again."); // Log an error
+    //   alert("OTP verification failed. Please try again.");
+    // }
+  };
+
   return (
     <MaxWidthWrapper>
       <div className="flex justify-between items-center w-full">
@@ -64,7 +102,7 @@ const VerifiedEmail = () => {
         </Dialog>
       </div>
     </MaxWidthWrapper>
-  )
-}
+  );
+};
 
-export default VerifiedEmail
+export default VerifiedEmail;
