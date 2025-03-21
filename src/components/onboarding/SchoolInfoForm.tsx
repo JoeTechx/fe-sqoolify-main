@@ -1,17 +1,17 @@
-"use client"
-import React, { useState } from "react"
-import { Button } from "../ui/button"
-import { cn } from "@/lib/utils"
-import { Label } from "../ui/label"
-import { Input } from "../ui/input"
-import { Textarea } from "../ui/textarea"
+"use client";
+import React, { useState } from "react";
+import { Button } from "../ui/button";
+import { cn } from "@/lib/utils";
+import { Label } from "../ui/label";
+import { Input } from "../ui/input";
+import { Textarea } from "../ui/textarea";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../ui/select"
+} from "../ui/select";
 import {
   FormControl,
   FormField,
@@ -19,31 +19,32 @@ import {
   FormLabel,
   Form,
   FormMessage,
-} from "../ui/form"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import * as z from "zod"
-import { Dialog } from "../ui/dialog"
-import { DialogTrigger } from "@radix-ui/react-dialog"
-import Requirement from "../Requirement"
-import { useOnboarding } from "@/contexts/onboarding-context"
+} from "../ui/form";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { Dialog } from "../ui/dialog";
+import { DialogTrigger } from "@radix-ui/react-dialog";
+import Requirement from "../Requirement";
+import { useOnboarding } from "@/contexts/onboarding-context";
 
-type MouseEvent = React.MouseEvent<HTMLButtonElement>
+type MouseEvent = React.MouseEvent<HTMLButtonElement>;
 type StateProp = {
-  label: string
-  value: string
-}
+  label: string;
+  value: string;
+};
 
 const SchoolInfoForm = () => {
-  const { updateCompletionState, goNextPage } = useOnboarding()
-  const [activeIndex, setActiveIndex] = useState<number>(0)
-  const [localGovernment, setLocalGovernment] = useState<StateProp[]>()
+  const { updateCompletionState, goNextPage } = useOnboarding();
+  const [charCount, setCharCount] = useState(0);
+  const [activeIndex, setActiveIndex] = useState<number>(0);
+  const [localGovernment, setLocalGovernment] = useState<StateProp[]>();
   const schoolTypes = [
     { label: "Primary" },
     { label: "Secondary" },
     { label: "Both" },
     { label: "Sixth Form" },
-  ]
+  ];
 
   const formData = {
     states: [
@@ -137,12 +138,12 @@ const SchoolInfoForm = () => {
         ],
       },
     ],
-  }
+  };
   const FormSchema = z.object({
-    schoolName: z
+    name: z
       .string()
       .min(2, { message: "School name must be at least 2 characters" }),
-    aboutSchool: z
+    description: z
       .string()
       .min(2, { message: "About school name must be at least 2 characters" })
       .max(500, { message: "About school cannot be more than 500 characters" }),
@@ -153,22 +154,22 @@ const SchoolInfoForm = () => {
       .string()
       .min(2, { message: "Please select a local government" }),
     state: z.string().min(2, { message: "Please select a state" }),
-  })
+  });
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
       schoolAddress: "",
-      schoolName: "",
+      name: "",
       state: "",
       localGovernment: "",
-      aboutSchool: "",
+      description: "",
     },
-  })
+  });
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log({ ...data, schoolType: schoolTypes[activeIndex].label })
-    goNextPage()
-    updateCompletionState("Company Information")
+    console.log({ ...data, schoolType: schoolTypes[activeIndex].label });
+    goNextPage();
+    updateCompletionState("Company Information");
   }
   return (
     <Form {...form}>
@@ -183,11 +184,11 @@ const SchoolInfoForm = () => {
             <div className="grid grid-cols-2 gap-4  ">
               {schoolTypes.map((item, i) => {
                 const handleOpen = (e: MouseEvent) => {
-                  e.preventDefault()
-                  setActiveIndex(i)
-                }
+                  e.preventDefault();
+                  setActiveIndex(i);
+                };
 
-                const isOpen = i === activeIndex
+                const isOpen = i === activeIndex;
                 return (
                   <div key={item.label}>
                     <Button
@@ -203,7 +204,7 @@ const SchoolInfoForm = () => {
                       {item.label}
                     </Button>
                   </div>
-                )
+                );
               })}
             </div>
             <Dialog>
@@ -231,7 +232,7 @@ const SchoolInfoForm = () => {
           <div className="mt-4 sm:mt-0">
             <FormField
               control={form.control}
-              name="schoolName"
+              name="name"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Enter your School name</FormLabel>
@@ -260,7 +261,7 @@ const SchoolInfoForm = () => {
           <div className="grid gap-1.5 mt-4 sm:mt-0 w-full max-w-[25rem]">
             <FormField
               control={form.control}
-              name="aboutSchool"
+              name="description"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>About your School</FormLabel>
@@ -270,7 +271,12 @@ const SchoolInfoForm = () => {
                       id="message-2"
                       className="resize-none"
                       rows={8}
+                      maxLength={500}
                       {...field}
+                      onChange={(e) => {
+                        setCharCount(e.target.value.length);
+                        field.onChange(e);
+                      }}
                     />
                   </FormControl>
                   <FormMessage />
@@ -283,7 +289,7 @@ const SchoolInfoForm = () => {
                 Maximum 500 characters.
               </p>
               <div className="flex items-center text-muted-foreground text-sm">
-                <span>0</span>
+                <span>{charCount}</span>
                 <span>/</span>
                 <span>500</span>
               </div>
@@ -329,13 +335,13 @@ const SchoolInfoForm = () => {
                 <FormItem>
                   <FormLabel>State</FormLabel>
                   <Select
-                    onValueChange={state => {
-                      field.onChange(state)
-                      formData.states.forEach(item => {
+                    onValueChange={(state) => {
+                      field.onChange(state);
+                      formData.states.forEach((item) => {
                         if (item.value.toLowerCase() === state.toLowerCase()) {
-                          setLocalGovernment(item.localGovernments)
+                          setLocalGovernment(item.localGovernments);
                         }
-                      })
+                      });
                     }}
                     defaultValue={field.value}
                   >
@@ -345,7 +351,7 @@ const SchoolInfoForm = () => {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {formData.states.map(state => (
+                      {formData.states.map((state) => (
                         <SelectItem key={state.label} value={state.value}>
                           {state.label}
                         </SelectItem>
@@ -373,7 +379,7 @@ const SchoolInfoForm = () => {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {localGovernment?.map(item => (
+                      {localGovernment?.map((item) => (
                         <SelectItem key={item.label} value={item.value}>
                           {item.value}
                         </SelectItem>
@@ -399,7 +405,7 @@ const SchoolInfoForm = () => {
         </div>
       </form>
     </Form>
-  )
-}
+  );
+};
 
-export default SchoolInfoForm
+export default SchoolInfoForm;

@@ -26,32 +26,27 @@ import { Checkbox } from "@/components/ui/checkbox";
 import Link from "next/link";
 import { sendOTP } from "@/components/Api";
 
-const FormSchema = z
-  .object({
-    firstname: z.string().min(3, "Please provide your first name"),
-    lastname: z.string().min(3, "Please provide your last name"),
-    policy: z.boolean(),
-    phoneNumber: z.string().refine((value) => /^(\+\d{1,})?\d+$/.test(value), {
-      message: "Invalid phone number format",
-    }),
-    email: z.string().email("Please enter your email address"),
-    password: z
-      .string()
-      .refine(
-        (value) =>
-          /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
-            value
-          ),
-        {
-          message:
-            "Password must be at least 8 characters long and contain at least 1 letter, 1 number, and 1 special character",
-        }
-      ),
-    confirmPassword: z.string(),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords do not match",
-  });
+const FormSchema = z.object({
+  firstName: z.string().min(3, "Please provide your first name"),
+  lastName: z.string().min(3, "Please provide your last name"),
+  phoneNumber: z.string().refine((value) => /^(\+\d{1,})?\d+$/.test(value), {
+    message: "Invalid phone number format",
+  }),
+  email: z.string().email("Please enter your email address"),
+  password: z
+    .string()
+    .refine(
+      (value) =>
+        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
+          value
+        ),
+      {
+        message:
+          "Password must be at least 8 characters long and contain at least 1 letter, 1 number, and 1 special character",
+      }
+  ),
+  verificationCode: z.string(),
+});
 
 const SignUp = () => {
   const router = useRouter();
@@ -60,18 +55,17 @@ const SignUp = () => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      firstname: "",
-      lastname: "",
+      firstName: "",
+      lastName: "",
       email: "",
       password: "",
-      confirmPassword: "",
       phoneNumber: "",
-      policy: false,
+      verificationCode: "",
     },
   });
 
   async function submitHandler(data: z.infer<typeof FormSchema>) {
-    console.log(DataTransferItemList)
+    console.log(DataTransferItemList);
     try {
       // Ensure phone number starts with +234
       const formattedPhone = data.phoneNumber.startsWith("+234")
@@ -118,12 +112,12 @@ const SignUp = () => {
             <div className="flex flex-col sm:flex-row items-center w-full gap-4">
               <FormField
                 control={form.control}
-                name="firstname"
+                name="firstName"
                 render={({ field }) => (
                   <FormItem className="flex-1 w-full">
                     <FormLabel>First Name</FormLabel>
                     <FormControl>
-                      <Input placeholder="First name" {...field} type="text" />
+                      <Input placeholder="First Name" {...field} type="text" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -131,12 +125,12 @@ const SignUp = () => {
               />
               <FormField
                 control={form.control}
-                name="lastname"
+                name="lastName"
                 render={({ field }) => (
                   <FormItem className="flex-1 w-full">
                     <FormLabel>Last Name</FormLabel>
                     <FormControl>
-                      <Input placeholder="Last name" {...field} type="text" />
+                      <Input placeholder="Last Name" {...field} type="text" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -166,7 +160,7 @@ const SignUp = () => {
                   <FormLabel>Email Address</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Email address"
+                      placeholder="Email Address"
                       {...field}
                       type="email"
                     />
@@ -200,7 +194,7 @@ const SignUp = () => {
                     </FormItem>
                   )}
                 />
-                <FormField
+                {/* <FormField
                   control={form.control}
                   name="confirmPassword"
                   render={({ field }) => (
@@ -216,13 +210,13 @@ const SignUp = () => {
                       <FormMessage />
                     </FormItem>
                   )}
-                />
+                /> */}
               </div>
             </div>
 
             {/* Accept Terms */}
             <div className="items-top flex space-x-2 mt-4">
-              <FormField
+              {/* <FormField
                 name="policy"
                 control={form.control}
                 render={({ field }) => (
@@ -240,7 +234,8 @@ const SignUp = () => {
                     <FormMessage />
                   </FormItem>
                 )}
-              />
+              /> */}
+
               <div className="grid gap-1.5 leading-none">
                 <label htmlFor="policy" className="text-sm font-medium">
                   Accept terms and conditions

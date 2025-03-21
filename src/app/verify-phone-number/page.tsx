@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import OtpInput from "react-otp-input";
@@ -10,31 +11,59 @@ import { registerUser } from "@/components/Api";
 export default function VerifyPhoneNumber() {
   const router = useRouter();
   const phoneNumber = useUserPhoneStore((state) => state.phoneNumber);
-  const { user } = useUserStore(); // Fetch user data from Zustand store
-
-  const [otp, setOtp] = useState("");
+  const { user, setUser } = useUserStore(); // Fetch user data from Zustand store
+  const [otp, setOtp] = useState(" ");
   const [loading, setLoading] = useState(false);
+  const { toast } = useToast();
+
+  const maskPhoneNumber = (phoneNumber: string) => {
+    if (!phoneNumber || phoneNumber.length < 7) return phoneNumber;
+    return phoneNumber.slice(0, 4) + "****" + phoneNumber.slice(-3);
+  };
 
   const handleVerify = async () => {
     if (!user) {
-      alert("User data not found.");
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "User data not found.",
+        duration: 3000,
+      });
       return;
     }
 
     setLoading(true);
 
     try {
-      const isRegistered = await registerUser(user);
+      const updatedUser = { ...user, verificationCode: otp };
+      setUser(updatedUser); // Update the user store with the verification code
+
+      const isRegistered = await registerUser(updatedUser);
 
       if (isRegistered) {
-        alert("Registration successful!");
+        toast({
+          variant: "default",
+          title: "Success",
+          description: "Registration successful!",
+          duration: 3000,
+        });
         router.push("/onboarding"); // Redirect to onboarding page
       } else {
-        alert("Registration failed. Please try again.");
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: "Registration failed. Please try again.",
+          duration: 3000,
+        });
       }
     } catch (error) {
       console.error("Error registering user:", error);
-      alert("An error occurred while registering.");
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "An error occurred while registering.",
+        duration: 3000,
+      });
     } finally {
       setLoading(false);
     }
@@ -47,7 +76,9 @@ export default function VerifyPhoneNumber() {
           Verify your Phone number
         </h2>
         <p className="text-[#515B6F] font-normal text-[18px]">
-          We sent an OTP to {phoneNumber || "your number"} via SMS and WhatsApp.
+          We sent an OTP to{" "}
+          {phoneNumber ? maskPhoneNumber(phoneNumber) : "your number"} via SMS
+          and WhatsApp.
         </p>
       </div>
 
@@ -58,7 +89,7 @@ export default function VerifyPhoneNumber() {
           value={otp}
           onChange={setOtp}
           inputType="text"
-          numInputs={6}
+          numInputs={4}
           renderSeparator={<span></span>}
           renderInput={(props) => (
             <input
@@ -67,7 +98,7 @@ export default function VerifyPhoneNumber() {
               className="w-[9rem] text-[1.5rem] text-center border-2 border-[#ccc] rounded-[5px] m-0 mx-1"
             />
           )}
-          placeholder="000000"
+          placeholder="0000"
           onPaste={(e) => e.preventDefault()}
         />
         <div>

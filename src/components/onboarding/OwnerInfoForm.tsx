@@ -1,5 +1,5 @@
-"use client"
-import { Button } from "../ui/button"
+"use client";
+import { Button } from "../ui/button";
 import {
   Form,
   FormControl,
@@ -7,7 +7,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form"
+} from "../ui/form";
 import {
   Select,
   SelectContent,
@@ -16,26 +16,26 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
-import { Input } from "@/components/ui/input"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import * as z from "zod"
-import DatePicker from "../DatePicker"
-import AttachmentUpload from "../AttachmentUpload"
-import { useState } from "react"
-import { useOnboarding } from "@/contexts/onboarding-context"
+} from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+import DatePicker from "../DatePicker";
+import AttachmentUpload from "../AttachmentUpload";
+import { useState } from "react";
+import { useOnboarding } from "@/contexts/onboarding-context";
 
 const formSchema = z.object({
-  firstname: z
+  firstName: z
     .string({ required_error: "first name is required" })
     .min(2)
     .max(50),
-  lastname: z
+  lastName: z
     .string({ required_error: "last name is required" })
     .min(2)
     .max(50),
-  phone: z
+  phoneNumber: z
     .string({ required_error: "phone number is required" })
     .min(2)
     .max(50),
@@ -45,39 +45,39 @@ const formSchema = z.object({
   address: z
     .string({ required_error: "residential address is required" })
     .min(2),
-  formofID: z.string().min(2),
+  idType: z.string().min(2),
   idNumber: z.string({ required_error: "ID is required" }).min(2),
-})
+});
 
 const OwnerInfoForm = () => {
-  const { updateCompletionState, goNextPage } = useOnboarding()
-  const [isVisible, setIsVisible] = useState(false)
+  const { updateCompletionState, goNextPage } = useOnboarding();
+  const [isVisible, setIsVisible] = useState(false);
   function closeForm() {
-    setIsVisible(false)
+    setIsVisible(false);
   }
   function openForm() {
-    setIsVisible(true)
+    setIsVisible(true);
   }
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      firstname: "",
-      lastname: "",
-      phone: "",
+      firstName: "",
+      lastName: "",
+      phoneNumber: "",
       dob: new Date(),
       nationality: "",
       address: "",
-      formofID: "",
+      idType: "",
       idNumber: "",
       gender: "",
     },
-  })
+  });
   function onSubmit(data: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    console.log(data)
-    goNextPage()
-    updateCompletionState("Owner Information")
+    console.log(data);
+    goNextPage();
+    updateCompletionState("Owner Information");
   }
   return (
     <div className="bg-white rounded-md py-4 mt-8    ">
@@ -114,13 +114,13 @@ const OwnerInfoForm = () => {
                 <div className="flex flex-col sm:flex-row items-center gap-4">
                   <FormField
                     control={form.control}
-                    name="firstname"
+                    name="firstName"
                     render={({ field }) => (
                       <FormItem className="w-full">
                         <FormLabel>Legal Firstname</FormLabel>
                         <FormControl>
                           <Input
-                            placeholder="Enter firstname"
+                            placeholder="Enter firstName"
                             {...field}
                             type="text"
                           />
@@ -131,13 +131,13 @@ const OwnerInfoForm = () => {
                   />
                   <FormField
                     control={form.control}
-                    name="lastname"
+                    name="lastName"
                     render={({ field }) => (
                       <FormItem className="w-full">
                         <FormLabel>Legal Lastname</FormLabel>
                         <FormControl>
                           <Input
-                            placeholder="Enter firstname"
+                            placeholder="Enter lastName"
                             {...field}
                             type="text"
                           />
@@ -149,7 +149,7 @@ const OwnerInfoForm = () => {
                 </div>
                 <FormField
                   control={form.control}
-                  name="phone"
+                  name="phoneNumber"
                   render={({ field }) => (
                     <FormItem className="w-full">
                       <FormLabel>Phone Number </FormLabel>
@@ -258,7 +258,7 @@ const OwnerInfoForm = () => {
                 <div className="flex flex-col sm:flex-row items-center gap-4">
                   <FormField
                     control={form.control}
-                    name="formofID"
+                    name="idType"
                     render={({ field }) => (
                       <FormItem className="flex-1">
                         <FormLabel>Form of ID</FormLabel>
@@ -323,7 +323,7 @@ const OwnerInfoForm = () => {
         <div className="w-full h-[60vh]"></div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default OwnerInfoForm
+export default OwnerInfoForm;

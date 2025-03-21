@@ -3,13 +3,12 @@
 import { create } from "zustand";
 
 export interface User {
-  firstname: string;
-  lastname: string;
+  firstName: string;
+  lastName: string;
   email: string;
   password: string;
   phoneNumber: string;
-  policy: boolean;
-  verificationCode?: string;
+  verificationCode: string;
 }
 
 interface UserStore {
